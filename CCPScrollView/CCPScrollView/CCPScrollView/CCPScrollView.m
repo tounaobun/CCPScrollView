@@ -36,7 +36,7 @@
     
     if (_ccpScrollView == nil) {
         
-        _ccpScrollView = [[UIScrollView alloc] initWithFrame:self.bounds];
+        _ccpScrollView = [[UIScrollView alloc] init];
         _ccpScrollView.showsHorizontalScrollIndicator = NO;
         _ccpScrollView.showsVerticalScrollIndicator = NO;
         _ccpScrollView.scrollEnabled = NO;
@@ -49,6 +49,23 @@
     return _ccpScrollView;
 }
 
+- (void)layoutSubviews {
+    // 更新scrollView frame
+    self.ccpScrollView.frame = self.bounds;
+}
+
+- (instancetype)initWithCoder:(NSCoder *)aDecoder {
+    if (self = [super initWithCoder:aDecoder]) {
+        self.labelW = self.size.width;
+        
+        self.labelH = self.size.height;
+        
+        self.ccpScrollView.delegate = self;
+        
+        [self addTimer];
+    }
+    return self;
+}
 
 - (instancetype)initWithFrame:(CGRect)frame {
     
@@ -125,7 +142,7 @@
         
         [titleLabel addGestureRecognizer:tap];
         
-        titleLabel.textAlignment = NSTextAlignmentCenter;
+        titleLabel.textAlignment = NSTextAlignmentLeft;
         
         CGFloat labelY = i * labelH;
         
